@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>LockDraw Privacy Policy</title>
+<style>
+  :root { color-scheme: light; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.55; max-width: 42rem; margin: 0 auto; padding: 1.5rem; color: #1C1B1F; background: #FFFBFE; }
+  h1 { font-size: 1.75rem; color: #6750A4; }
+  h2 { font-size: 1.25rem; margin-top: 2rem; color: #21005D; }
+  h3 { font-size: 1.05rem; margin-top: 1.25rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.95rem; }
+  th, td { border: 1px solid #E7E0EC; padding: 0.5rem 0.65rem; text-align: left; vertical-align: top; }
+  th { background: #EADDFF; }
+  blockquote { margin: 1rem 0; padding: 0.75rem 1rem; background: #F7F0FF; border-left: 4px solid #6750A4; }
+  a { color: #6750A4; }
+  code { font-size: 0.9em; background: #F3EDF7; padding: 0.1em 0.35em; border-radius: 4px; }
+  .meta { color: #625B71; font-size: 0.95rem; }
+  .lang { margin: 0 0 1.25rem; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<p class="lang"><strong>English</strong> · <a href="ru.html">Русский</a></p>
+<h1>LockDraw Privacy Policy (English)</h1>
+<p><strong>Last updated:</strong> 19 July 2026 <strong>App:</strong> LockDraw (<code>dev.lockdraw.app</code>) <strong>Operator / Data controller:</strong> *[Insert legal name, address, contact email — e.g. <code>privacy@yourdomain.com</code>]*</p>
+<p>This policy describes how LockDraw (“we”, “us”) processes information when you use the Android app. It applies to <strong>local drawing</strong>, optional <strong>collaborative rooms</strong> (data on <strong>your operator’s server</strong>), optional <strong>Sign in with Google</strong>, optional <strong>Google Play</strong> tips, on-device <strong>widget / overlay</strong> previews, and optional <strong>Firebase</strong> diagnostics / analytics when enabled in the build.</p>
+<blockquote>
+<p><strong>Store release note:</strong> Some production builds may hide online rooms until a later update (<a href="../../product/PRODUCT_DECISIONS.md">PD-001</a>). This policy still describes implemented features when they are enabled in your build.</p>
+</blockquote>
+<h2>1. Summary</h2>
+<table>
+<tr><th>Activity</th><th>Data</th><th>Sent off device?</th></tr>
+<tr><td>Local canvas</td><td>Strokes, stickers, background, preview file on device</td><td><strong>No</strong></td></tr>
+<tr><td>Collaborative room</td><td>Display name, room code, strokes/stickers, session token</td><td><strong>Yes</strong> — operator API (HTTPS / WSS)</td></tr>
+<tr><td>Google Sign-In (optional)</td><td>ID token in memory; label + subject on device</td><td>Token may be sent <strong>once</strong> when creating/joining a room</td></tr>
+<tr><td>Support tips</td><td>Purchase handled by Google Play</td><td><strong>Google</strong>, not our drawing server</td></tr>
+<tr><td>Widget / overlay</td><td>Preview image on device</td><td><strong>No</strong></td></tr>
+<tr><td>Crash reports (when Firebase is configured)</td><td>Stack traces, device/app metadata</td><td><strong>Google Firebase Crashlytics</strong></td></tr>
+<tr><td>Usage analytics (opt-in)</td><td>Coarse interaction events (e.g. app open, drawing started)</td><td><strong>Google Firebase Analytics</strong> only if you enable the Settings toggle (default <strong>off</strong>)</td></tr>
+</table>
+<p>We do <strong>not</strong> embed advertising SDKs. We do <strong>not</strong> sell personal data for ads.</p>
+<h2>2. Who operates the server</h2>
+<p>Collaborative rooms sync to an API base URL configured at app build time (<code>lockdraw.api.base.url</code> → your deployment). <strong>You</strong> (the operator hosting that API) are the data controller for data stored or processed on that server. The app is a client; we do not provide a default public multi-tenant cloud for all users unless you deploy one and disclose its URL.</p>
+<p>Document for users in the store listing: who runs the server and this privacy policy URL.</p>
+<h2>3. Data we process</h2>
+<h3>3.1 On your device (all users)</h3>
+<ul><li><strong>Onboarding flag</strong> — whether the welcome flow was completed (<code>lockdraw_onboarding</code>).</li><li><strong>Display name</strong> — last name entered on the home screen for convenience (<code>lockdraw_user_prefs</code>). Used locally; in room mode the same value is sent to the server when you create or join a room.</li><li><strong>Drawing preview</strong> — PNG preview for widget and optional overlay (<code>filesDir</code>), not uploaded by default.</li><li><strong>Canvas preferences</strong> — e.g. background colour (local preferences).</li></ul>
+<h3>3.2 Collaborative room mode (when enabled)</h3>
+<p>Sent to <strong>your operator’s server</strong> over <strong>HTTPS</strong> (REST) and <strong>WSS</strong> (WebSocket):</p>
+<ul><li><strong>Display name</strong> on the canvas (pseudonym; may be “Guest” if empty).</li><li><strong>Room join code</strong> and <strong>room identifier</strong>.</li><li><strong>Drawing data</strong> — stroke batches and sticker metadata (coordinates normalised 0–1, colours, sequence numbers for sync).</li><li><strong>Session credentials</strong> — access token and WebSocket URL returned by the server; optionally stored on device only if you turn on <strong>“Save session on this device”</strong> (encrypted preferences, or plain fallback if encryption fails).</li><li><strong>Participant identifier</strong> — UUID assigned by the server for the room session.</li><li><strong>Offline queue</strong> (optional) — if session save is enabled, unsent stroke batches may be stored on device until reconnect.</li></ul>
+<p>We do <strong>not</strong> collect precise location, contacts, photos library, or microphone through LockDraw for room sync.</p>
+<h3>3.3 Google Sign-In (optional, when enabled at build time)</h3>
+<ul><li>On device: a <strong>display label</strong> (name or email from the token) and Google <strong>subject</strong> id in app preferences (<code>lockdraw_google_account</code>).</li><li><strong>Google ID token</strong> is kept <strong>in RAM only</strong> until you sign out; it is <strong>not</strong> written to disk.</li><li>If you create or join a room while signed in, the app may send the ID token <strong>once</strong> to your server so the server can verify it (when <code>LOCKDRAW_GOOGLE_WEB_CLIENT_ID</code> is configured) and stabilise participant identity via Google <code>sub</code>.</li></ul>
+<p>Google processes sign-in under <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+<h3>3.4 Google Play purchases (optional)</h3>
+<p>Tips on the Support screen are processed by <strong>Google Play Billing</strong>. We receive product catalog and purchase state through Google’s APIs; we do not store card numbers. Google’s policies apply to payment data.</p>
+<h3>3.5 Technical data on the server (operator responsibility)</h3>
+<p>When you host the LockDraw API (<code>:server</code> or equivalent), typical <strong>technical logs</strong> may include:</p>
+<ul><li>HTTP/WebSocket access logs (IP address, timestamps, request paths, response codes).</li><li>Room and session identifiers in application logs for operations and security.</li><li>Error and security events (invalid tokens, rate limits).</li></ul>
+<p>The reference server in the open-source repo holds room data <strong>in memory</strong> by default (no long-term stroke archive unless you add persistence). <strong>Configure retention, backups, and log rotation</strong> on your infrastructure and document them here or in a server addendum.</p>
+<h3>3.6 Firebase Crashlytics and Analytics (when <code>google-services.json</code> is present)</h3>
+<p>Builds that include Firebase may send:</p>
+<ul><li><strong>Crashlytics</strong> — crash stack traces and diagnostic metadata to Google to improve stability. There is no separate in-app “off” switch beyond uninstalling or clearing app data; disclosed here and in Play Data safety.</li><li><strong>Analytics</strong> — only after you turn on the <strong>optional</strong> “usage data” / analytics toggle in Settings (default <strong>off</strong>). Events are coarse (for example app open, drawing started, drawing saved, widget added, support purchase). Revoking the toggle stops further analytics collection.</li></ul>
+<p>Google processes this data under <a href="https://policies.google.com/privacy">Google Privacy Policy</a> and Firebase terms. If Firebase is not configured in a build, these SDKs are not active.</p>
+<h2>4. Purposes and legal bases (EEA/UK users)</h2>
+<table>
+<tr><th>Purpose</th><th>Data</th><th>Typical legal basis</th></tr>
+<tr><td>Provide local drawing, widget, export</td><td>On-device art</td><td>Contract / legitimate interest</td></tr>
+<tr><td>Run collaborative rooms</td><td>Strokes, session, name</td><td>Contract / consent (joining a room is a clear action)</td></tr>
+<tr><td>Optional Google link in rooms</td><td>ID token, subject</td><td>Consent / legitimate interest</td></tr>
+<tr><td>Fraud prevention, security on API</td><td>Logs, tokens</td><td>Legitimate interest</td></tr>
+<tr><td>Optional tips</td><td>Play purchase events</td><td>Contract</td></tr>
+<tr><td>Crash diagnostics (Firebase)</td><td>Crash logs</td><td>Legitimate interest / consent where required</td></tr>
+<tr><td>Optional analytics (opt-in)</td><td>App interaction events</td><td>Consent (Settings toggle)</td></tr>
+</table>
+<h2>5. Storage duration</h2>
+<table>
+<tr><th>Data</th><th>Retention</th></tr>
+<tr><td>On-device preview / prefs</td><td>Until you clear app data or uninstall</td></tr>
+<tr><td>Saved room session (opt-in)</td><td>Until you disable save, “Forget room”, or clear data</td></tr>
+<tr><td>Server room state (default reference server)</td><td>Until server restart or room idle TTL (operator configures; reference TTL 24h for session tokens)</td></tr>
+<tr><td>Server logs</td><td>Per operator policy (recommend ≤ 90 days unless security need)</td></tr>
+<tr><td>Google token in RAM</td><td>Until sign-out or app process ends</td></tr>
+</table>
+<h2>6. Sharing with third parties</h2>
+<ul><li><strong>Google</strong> — Sign-In (optional), Play Billing (optional).</li><li><strong>Hosting provider</strong> — where you deploy the API (e.g. cloud VPS).</li><li><strong>No sale</strong> of personal data for advertising in the current app.</li></ul>
+<h2>7. Security</h2>
+<ul><li>Production API must use <strong>TLS (HTTPS / WSS)</strong> only; see <a href="../../api/BROKER_AND_TRANSPORT_SECURITY.md">BROKER_AND_TRANSPORT_SECURITY.md</a>.</li><li>Room access requires a <strong>session token</strong>; clients cannot subscribe to arbitrary rooms without it.</li><li>Optional encrypted storage for saved sessions on device.</li></ul>
+<p>No method is 100% secure; report issues to *[security contact]*.</p>
+<h2>8. Your rights</h2>
+<p>Depending on your region (GDPR, UK GDPR, etc.), you may have the right to:</p>
+<ul><li><strong>Access</strong> data we hold about you on the server (strokes in active rooms, session metadata, logs tied to your token).</li><li><strong>Rectify</strong> inaccurate display names (change in app before or during a session).</li><li><strong>Erase</strong> data — see §9.</li><li><strong>Restrict</strong> or <strong>object</strong> to certain processing.</li><li><strong>Portability</strong> — export drawings locally (PNG share); server-side export only if the operator provides it.</li><li><strong>Complain</strong> to your supervisory authority.</li></ul>
+<p>Contact: *[privacy@yourdomain.com]* — we respond within *[30]* days where required.</p>
+<h2>9. Deletion and account</h2>
+<p>LockDraw has <strong>no mandatory cloud account</strong>. Deletion options:</p>
+<p>1. <strong>Local</strong> — uninstall the app or clear storage in Android settings (removes prefs, preview, optional saved session). 2. <strong>Leave a room</strong> — stop syncing; server copy remains until operator deletes the room or restarts in-memory storage. 3. <strong>Request server deletion</strong> — email *[privacy@yourdomain.com]* with room code / approximate time / display name used; operator deletes room data and associated logs where identifiable. 4. <strong>Google Sign-In</strong> — use “Sign out” in Settings; clears on-device label; server may retain prior <code>participantId</code> mapping until room data is deleted.</p>
+<p>We will confirm deletion when practicable. Purchases remain in Google Play history (managed by Google).</p>
+<h2>10. Children</h2>
+<p>LockDraw is not directed at children under 13 (or minimum age in your country). Room mode allows <strong>user-generated drawings</strong> shared in real time; parents should supervise minors. If you believe a child provided data, contact us for deletion.</p>
+<h2>11. International transfers</h2>
+<p>If the server is outside your country (e.g. EU user, US server), transfers rely on appropriate safeguards (SCCs, adequacy, or your documented basis). State server location in the store listing.</p>
+<h2>12. User-generated content (rooms)</h2>
+<p>Users can draw any content in shared rooms. The operator should:</p>
+<ul><li>Provide this policy and acceptable-use rules.</li><li>Remove rooms or block abuse when notified at *[abuse@yourdomain.com]*.</li><li>Plan in-app <strong>report/block</strong> if scale requires (not required in all store builds today).</li></ul>
+<h2>13. Changes</h2>
+<p>We may update this policy; the “Last updated” date will change. Material changes: in-app notice or store listing update. Continued use after notice means acceptance where permitted by law.</p>
+<h2>14. Contact</h2>
+<p><strong>Data controller:</strong> *[Legal entity name]* <strong>Email:</strong> *[privacy@yourdomain.com]* <strong>Postal address:</strong> *[optional]*</p>
+<p>*Publish this file at a stable HTTPS URL and set <code>lockdraw.privacy.policy.url</code> in <code>gradle.properties</code>. See <a href="../PRIVACY_POLICY_HOSTING.md">PRIVACY_POLICY_HOSTING.md</a>.*</p>
+<p class="meta">Deploy to <code>https://lockdraw.app/privacy</code> (replace any lander redirect). Source markdown in this folder.</p>
+</body></html>
