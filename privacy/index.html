@@ -23,7 +23,7 @@
 <body>
 <p class="lang"><strong>English</strong> · <a href="ru.html">Русский</a></p>
 <h1>LockDraw Privacy Policy (English)</h1>
-<p><strong>Last updated:</strong> 19 July 2026 <strong>App:</strong> LockDraw (<code>dev.lockdraw.app</code>) <strong>Operator / Data controller:</strong> *[Insert legal name, address, contact email — e.g. <code>privacy@yourdomain.com</code>]*</p>
+<p><strong>Last updated:</strong> 22 September 2026 <strong>App:</strong> LockDraw (<code>dev.lockdraw.app</code>) <strong>Operator / Data controller:</strong> *[Insert legal name, address, contact email — e.g. <code>privacy@yourdomain.com</code>]*</p>
 <p>This policy describes how LockDraw (“we”, “us”) processes information when you use the Android app. It applies to <strong>local drawing</strong>, optional <strong>collaborative rooms</strong> (data on <strong>your operator’s server</strong>), optional <strong>Sign in with Google</strong>, optional <strong>Google Play</strong> tips, on-device <strong>widget / overlay</strong> previews, and optional <strong>Firebase</strong> diagnostics / analytics when enabled in the build.</p>
 <blockquote>
 <p><strong>Store release note:</strong> Some production builds may hide online rooms until a later update (<a href="../../product/PRODUCT_DECISIONS.md">PD-001</a>). This policy still describes implemented features when they are enabled in your build.</p>
@@ -39,7 +39,7 @@
 <tr><td>Crash reports (when Firebase is configured)</td><td>Stack traces, device/app metadata</td><td><strong>Google Firebase Crashlytics</strong></td></tr>
 <tr><td>Usage analytics (opt-in)</td><td>Coarse interaction events (e.g. app open, drawing started)</td><td><strong>Google Firebase Analytics</strong> only if you enable the Settings toggle (default <strong>off</strong>)</td></tr>
 </table>
-<p>We do <strong>not</strong> embed advertising SDKs. We do <strong>not</strong> sell personal data for ads.</p>
+<p>We show banner ads on the home screen via <strong>CAS.AI (CleverAdsSolutions)</strong> mediation and its ad partners (including Google AdMob). Personalized ads appear only after your consent (consent form on first launch). The device advertising ID may be used according to partner policies and your device settings. We do <strong>not</strong> sell personal data for ads. Ads never appear on the drawing canvas itself.</p>
 <h2>2. Who operates the server</h2>
 <p>Collaborative rooms sync to an API base URL configured at app build time (<code>lockdraw.api.base.url</code> → your deployment). <strong>You</strong> (the operator hosting that API) are the data controller for data stored or processed on that server. The app is a client; we do not provide a default public multi-tenant cloud for all users unless you deploy one and disclose its URL.</p>
 <p>Document for users in the store listing: who runs the server and this privacy policy URL.</p>
@@ -84,7 +84,7 @@
 <tr><td>Google token in RAM</td><td>Until sign-out or app process ends</td></tr>
 </table>
 <h2>6. Sharing with third parties</h2>
-<ul><li><strong>Google</strong> — Sign-In (optional), Play Billing (optional).</li><li><strong>Hosting provider</strong> — where you deploy the API (e.g. cloud VPS).</li><li><strong>No sale</strong> of personal data for advertising in the current app.</li></ul>
+<ul><li><strong>Google</strong> — Sign-In (optional), Play Billing (optional).</li><li><strong>Hosting provider</strong> — where you deploy the API (e.g. cloud VPS).</li><li><strong>No sale</strong> of personal data for advertising. Ads are served via CAS.AI mediation with your consent.</li></ul>
 <h2>7. Security</h2>
 <ul><li>Production API must use <strong>TLS (HTTPS / WSS)</strong> only; see <a href="../../api/BROKER_AND_TRANSPORT_SECURITY.md">BROKER_AND_TRANSPORT_SECURITY.md</a>.</li><li>Room access requires a <strong>session token</strong>; clients cannot subscribe to arbitrary rooms without it.</li><li>Optional encrypted storage for saved sessions on device.</li></ul>
 <p>No method is 100% secure; report issues to *[security contact]*.</p>
